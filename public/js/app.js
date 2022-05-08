@@ -5386,6 +5386,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Index",
@@ -5433,8 +5450,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
-
 
 var api = new (axios__WEBPACK_IMPORTED_MODULE_0___default().create)(); // start request
 
@@ -5449,7 +5464,7 @@ api.interceptors.request.use(function (config) {
 api.interceptors.response.use(function (config) {
   return config;
 }, function (error) {
-  if (error.response.data.message === 'Token has expired') {
+  if (error.response.statusText === "Unauthorized") {
     return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/auth/refresh', {}, {
       headers: {
         'authorization': 'Bearer ' + localStorage.getItem('access_token')
@@ -5460,6 +5475,8 @@ api.interceptors.response.use(function (config) {
       return api.request(error.config);
     });
   }
+
+  return Promise.reject(error);
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (api);
 
@@ -5558,6 +5575,18 @@ var route = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       return __webpack_require__.e(/*! import() */ "resources_js_components_User_Registration_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/User/Registration */ "./resources/js/components/User/Registration.vue"));
     },
     name: 'user.registration'
+  }, {
+    path: '/main',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_Main_Index_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/Main/Index */ "./resources/js/components/Main/Index.vue"));
+    },
+    name: 'main.index'
+  }, {
+    path: '/settings',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_User_Edit_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/User/Edit */ "./resources/js/components/User/Edit.vue"));
+    },
+    name: 'user.edit'
   }
   /*,
   {
@@ -28125,76 +28154,86 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("ul", { staticClass: "nav mb-3 nav-pills" }, [
-        _c(
-          "li",
-          { staticClass: "nav-item" },
-          [
-            !_vm.access_token
-              ? _c(
-                  "router-link",
-                  {
-                    staticClass: "nav-link",
-                    attrs: {
-                      to: { name: "user.login" },
-                      "active-class": "active",
-                    },
-                  },
-                  [_vm._v("Login")]
-                )
-              : _vm._e(),
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "li",
-          { staticClass: "nav-item" },
-          [
-            !_vm.access_token
-              ? _c(
-                  "router-link",
-                  {
-                    staticClass: "nav-link",
-                    attrs: {
-                      to: { name: "user.registration" },
-                      "active-class": "active",
-                    },
-                  },
-                  [_vm._v("registration")]
-                )
-              : _vm._e(),
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _vm.access_token
-            ? _c(
-                "a",
-                {
-                  staticClass: "nav-link",
-                  attrs: { href: "/logout" },
-                  on: {
-                    click: function ($event) {
-                      $event.preventDefault()
-                      return _vm.logout.apply(null, arguments)
-                    },
-                  },
-                },
-                [_vm._v("Logout")]
-              )
-            : _vm._e(),
+  return _c("div", [
+    _c("nav", { staticClass: "navbar navbar-expand-lg navbar-dark bg-dark" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
+          _vm._v("Umoney"),
         ]),
+        _vm._v(" "),
+        _vm.access_token
+          ? _c(
+              "button",
+              {
+                staticClass: "navbar-toggler",
+                attrs: {
+                  type: "button",
+                  "data-bs-toggle": "collapse",
+                  "data-bs-target": "#navbarColor01",
+                  "aria-controls": "navbarColor01",
+                  "aria-expanded": "false",
+                  "aria-label": "Toggle navigation",
+                },
+              },
+              [_c("span", { staticClass: "navbar-toggler-icon" })]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "collapse navbar-collapse",
+            attrs: { id: "navbarColor01" },
+          },
+          [
+            _c("ul", { staticClass: "navbar-nav me-auto mb-2 mb-lg-0" }, [
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _vm.access_token
+                    ? _c(
+                        "router-link",
+                        {
+                          staticClass: "nav-link",
+                          attrs: {
+                            to: { name: "user.edit" },
+                            "active-class": "active",
+                          },
+                        },
+                        [_vm._v("Settings\n                        ")]
+                      )
+                    : _vm._e(),
+                ],
+                1
+              ),
+            ]),
+            _vm._v(" "),
+            _c("form", { staticClass: "ms-auto d-flex" }, [
+              _vm.access_token
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-outline-light",
+                      attrs: { href: "/logout", type: "submit" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.logout.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [_vm._v("Logout")]
+                  )
+                : _vm._e(),
+            ]),
+          ]
+        ),
       ]),
-      _vm._v(" "),
-      _c("router-view"),
-    ],
-    1
-  )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "container" }, [_c("router-view")], 1),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -43634,7 +43673,7 @@ Vue.compile = compileToFunctions;
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_User_Login_vue":1,"resources_js_components_User_Registration_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_User_Login_vue":1,"resources_js_components_User_Registration_vue":1,"resources_js_components_Main_Index_vue":1,"resources_js_components_User_Edit_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

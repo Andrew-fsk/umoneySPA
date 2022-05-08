@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\User\StoreController;
+use App\Http\Controllers\User\UpdateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,8 +31,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('me', '\App\Http\Controllers\AuthController@me');
 
     Route::group(['middleware' => 'jwt.auth' ], function () {
-        Route::group(['namespace' => 'Fruit', 'prefix' => 'fruits'], function () {
-//            Route::get('/', [\App\Http\Controllers\Fruit\IndexController::class, '__invoke']);
+        Route::group(['namespace' => 'User', 'prefix' => 'user'], function () {
+            Route::patch('/update', [UpdateController::class, '__invoke']);
         });
     });
 });

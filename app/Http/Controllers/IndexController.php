@@ -6,6 +6,6 @@ class IndexController extends Controller
 {
     public function __invoke()
     {
-        return view('main.index');
+        return view('dashboard.main');
     }
 }

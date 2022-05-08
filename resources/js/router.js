@@ -14,6 +14,14 @@ const route = new VueRouter({
         {
             path: '/users/registration', component: () => import ('./components/User/Registration'),
             name: 'user.registration'
+        },
+        {
+            path: '/main', component: () => import ('./components/Main/Index'),
+            name: 'main.index'
+        },
+        {
+            path: '/settings', component: () => import ('./components/User/Edit'),
+            name: 'user.edit'
         }/*,
         {
             path: '*', component: () => import('./components/Index'),
